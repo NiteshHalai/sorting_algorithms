@@ -1,4 +1,4 @@
-#include"main.h"
+#include"sort.h"
 
 /**
 * _puts - prints string
