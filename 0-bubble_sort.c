@@ -1,3 +1,14 @@
+#include"main.h"
+
+/**
+* _puts - prints string
+*
+* @str: input function argument
+* @str: input function argument
+*
+* Return: outpuy
+*/
+
 void bubble_sort(int *array, size_t size) {
     int temp;
     for (size_t i = 0; i < size - 1; i++) {
