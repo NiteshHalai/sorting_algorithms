@@ -1,65 +1,76 @@
+#include "sort.h"
 /**
-* quick_sort - Land into the recursive function of quicksort
-*
-* @array: The array to sort
-* @size: The size of the array
-*
-* Return: Anything, cause void function
-*/
+ * quick_sort - Sorts a list of integers in ascending order using the Quick sort
+ * algorithm and the Lomuto partition scheme
+ * @array: The array to be sorted
+ * @size: Number of elements in @array
+ * Return: Nothing
+ * Description: This function sorts an array of integers in ascending order
+ * using the Quick sort algorithm 
+ */
+void quick_sort(int *array, size_t size)
+{
+	if (array == NULL || size < 2)
+		return;
 
-void quick_sort(int *array, size_t size) {
-    if (size < 2) return;
-
-    int pivot = array[size - 1];
-    int i = 0;
-    for (int j = 0; j < size - 1; j++) {
-        if (array[j] < pivot) {
-            int temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-            i++;
-        }
-    }
-
-    int temp = array[i];
-    array[i] = pivot;
-    array[size - 1] = temp;
-
-    for (int i = 0; i < size; i++)
-        printf("%d ", array[i]);
-
-    printf("\n");
-
-    quick_sort(array, i);
-    quick_sort(array + i + 1, size - i - 1);
+	quick_sort_rec(array, 0, size - 1);
 }
-Note: The above function will print the array each time two elements are swapped, but it should be used for debugging purpose.
+/**
+ * quick_sort_rec - Sorts a list of integers in ascending
+ * 
+ * @array: pointer to array
+ * @start: start
+ * @end: end
+ */
+void quick_sort_rec(int *array, int start, int end)
+{
+	int pivot, i, j;
 
+	if (start >= end)
+		return;
 
+	pivot = array[end];
+	i = start;
+	j = end - 1;
 
+	while (i <= j)
+	{
+		while (array[i] < pivot)
+			i++;
+		while (array[j] > pivot && j >= 0)
+			j--;
+		if (i <= j)
+		{
+			swap(&array[i], &array[j]);
+			print_array(array, end + 1);
+			i++;
+			j--;
 
-Nitesh Halai
-code will be run with gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 
-c
-Copy code
-void quick_sort(int *array, size_t size) {
-    if (size < 2) return;
+		}
+	}
+	swap(&array[i], &array[end]);
+	print_array(array, end + 1);
+	swap(&array[i], &array[end]);
+	print_array(array, end + 1);
+	quick_sort_rec(array, start, i - 1);
+	swap(&array[i], &array[end]);
+	print_array(array, end + 1);
+	quick_sort_rec(array, i + 1, end);
+	swap(&array[i], &array[end]);
+	print_array(array, end + 1);
+}
 
-    int pivot = array[size - 1];
-    int i = 0;
-    for (int j = 0; j < size - 1; j++) {
-        if (array[j] < pivot) {
-            int temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-            i++;
-        }
-    }
+/**
+ * @swap - swap vars
+ * 
+ * @a: index pointer
+ * @b: index pointer 
+ */
+void swap(int *a, int *b)
+{
+	int temp;
 
-    int temp = array[i];
-    array[i] = pivot;
-    array[size - 1] = temp;
-
-    quick_sort(array, i);
-    quick_sort(array + i + 1, size - i - 1);
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
